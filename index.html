@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>BloomFilter Spell Checker</title>
+    <script src="lib/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="js/bloomFilter.js" async></script>
+    <style>
+    #content {
+        width: 650 px;
+        margin: auto;
+        background-color: #fff;
+        padding: 20px;
+    }
+    body {
+        background-color: #90C3D4;
+        color: black;
+        font-size: 16px;
+    }
+    p {
+      line-height: 1.2em;
+      margin: 1em 0px;
+    }
+    sup {
+      font-size: 0.75em;
+      line-height: 0.5em;
+    }
+    .innerbox {
+        width: 450px;
+        margin: auto;
+        background-color: #B6C6CC;
+        padding: 10px;
+    }
+    </style>
+  </head>
+<body>
+  <div id="content">
+      <h1 align="center">Spell Checkers using Bloom Filters</h1>
+
+      <div id="addstring" class="innerbox">
+          <input type="submit" id="dictionary" value="Load Dictionary">
+          <span id="dictionaryStatus"></span><br>
+      </div>
+      <div id="checkWord" class="innerbox">
+          <p>Check if the word is in the dictionary : <input id="membership">
+          <div id="memhashes">
+              fnv: <span id="fnv1Mem"></span><br>
+              fnv1a: <span id="fnv1aMem"></span>
+          </div>
+          <p>Is the word in the loaded dictionary? <span id="ismember">no</span>
+      </div>
+ </div>
+
+</body>
+</html>

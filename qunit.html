@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bloom Filter Spell Checked test samples</title>
+  <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.20.0.css">
+</head>
+<body>
+  <div id="reusedParams" style="display: none">
+    <input id="membership">
+    <span id="ismember"></span>
+    <span id="dictionaryStatus"></span>
+  </div>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="http://code.jquery.com/qunit/qunit-1.20.0.js"></script>
+<script src="lib/jquery-2.1.0.min.js"></script>
+<script src="js/bloomFilter.js"></script>
+<script>
+  QUnit.test("stringToBytes", 1, function(assert){
+    var val = stringToBytes("ok");
+    assert.equal(val.length, "2", "passed");
+  });
+  QUnit.test("fnv1", 1, function(assert){
+    var val = fnv1("ok");
+    assert.equal(val,1098310454, "passed");
+  });
+  QUnit.test("fnv1a", 1 , function(assert){
+    var val = fnv1a("ok");
+    assert.equal(val,6179185618586223, "passed");
+  });
+  QUnit.test("bloom", 2, function(assert){
+    for (var i = 0; i < hashBits; i++) {
+      bitArray[i] = false;
+    }
+    var a = fnv1("ok");
+    var b = fnv1a("ok");
+    bloom("ok");
+    assert.equal(bitArray[a % hashBits], true, "passed");
+    assert.equal(bitArray[b % hashBits], true, "passed");
+  });
+  QUnit.test("checkWord", 2, function(assert){
+    for (var i = 0; i < hashBits; i++) {
+      bitArray[i] = false;
+    }
+    bloom("ok");
+    $('#membership').val("NONE");
+    checkWord(null);
+    assert.equal($('#ismember').html(),"no","Failure case");
+    $('#membership').val("ok");
+    checkWord(null);
+    assert.equal($('#ismember').html(),"maybe!","Success case");
+  });
+  QUnit.test("readDictionary", 1, function(assert){
+    readDictionary("ok");
+    stop(); // Pause the test
+    //Add your wait
+    setTimeout(function() {
+       //Make assertion
+       var index = $('#dictionaryStatus').html().indexOf('Dictionary loaded with 338883 words!!!')
+       assert.equal(index, 0, "passed");
+       // After the assertion called, restart the test
+       start();
+    }, 10000);
+  });
+</script>
+
+</body>
+</html>
